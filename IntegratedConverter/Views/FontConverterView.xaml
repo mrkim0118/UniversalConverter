@@ -1,0 +1,218 @@
+﻿<UserControl x:Class="UniversalConverter.Views.FontConverterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Background="#F3F4F6">
+
+    <UserControl.Resources>
+        <Style x:Key="CardBorder" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#E5E7EB"/>
+            <Setter Property="Margin" Value="6"/>
+            <Setter Property="Padding" Value="14,12"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FDF2F8"/>
+                    <Setter Property="BorderBrush" Value="#F9A8D4"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="FilterBtn" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#D1D5DB"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="Margin" Value="3,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#FDF2F8"/>
+                    <Setter Property="BorderBrush" Value="#F9A8D4"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="FilterBtnActive" TargetType="Border">
+            <Setter Property="Background" Value="#DB2777"/>
+            <Setter Property="CornerRadius" Value="16"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#DB2777"/>
+            <Setter Property="Padding" Value="14,6"/>
+            <Setter Property="Margin" Value="3,0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="GreenProgressBar" TargetType="ProgressBar">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ProgressBar">
+                        <Border x:Name="PART_Track" Background="{TemplateBinding Background}" CornerRadius="2">
+                            <Border x:Name="PART_Indicator"
+                                    Background="{TemplateBinding Foreground}"
+                                    HorizontalAlignment="Left" CornerRadius="2"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- ═══ Header ═══ -->
+        <Border Grid.Row="0" Padding="0,16">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#DB2777" Offset="0"/>
+                    <GradientStop Color="#9D174D" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <Grid Margin="20,0">
+                <Button x:Name="BackBtn" Content="← 돌아가기" HorizontalAlignment="Left"
+                        VerticalAlignment="Center" Cursor="Hand"
+                        Click="Back_Click"
+                        Background="Transparent" Foreground="#FBCFE8"
+                        BorderThickness="0" FontSize="13"
+                        FontFamily="Malgun Gothic" Padding="8,4"/>
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock x:Name="HeaderTitle" Text="🔤  폰트 포맷 변환기"
+                               FontSize="20" FontWeight="Bold"
+                               Foreground="White" HorizontalAlignment="Center"
+                               FontFamily="Malgun Gothic"/>
+                    <TextBlock Text="TTF · OTF · WOFF · WOFF2 · EOT"
+                               FontSize="11" Foreground="#FBCFE8"
+                               HorizontalAlignment="Center" Margin="0,4,0,0"
+                               FontFamily="Malgun Gothic"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <Button x:Name="LangBtn" Content="EN" Click="LangBtn_Click"
+                            Cursor="Hand" Margin="0,0,8,0" Padding="12,6"
+                            Background="#FCE7F3" Foreground="#9D174D"
+                            BorderBrush="#F9A8D4" BorderThickness="1"
+                            FontSize="11" FontWeight="SemiBold"
+                            FontFamily="Malgun Gothic"/>
+                    <Button x:Name="DonateBtn" Content="기부" Click="DonateBtn_Click"
+                            Cursor="Hand" Margin="0,0,8,0" Padding="12,6"
+                            Background="#F59E0B" Foreground="White"
+                            BorderBrush="#FBBF24" BorderThickness="1"
+                            FontSize="11" FontWeight="SemiBold"
+                            FontFamily="Malgun Gothic"/>
+                    <Button x:Name="WebsiteBtn" Content="홈페이지" Click="WebsiteBtn_Click"
+                            Cursor="Hand" Padding="12,6"
+                            Background="#9D174D" Foreground="White"
+                            BorderBrush="#F472B6" BorderThickness="1"
+                            FontSize="11" FontWeight="SemiBold"
+                            FontFamily="Malgun Gothic"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- ═══ Search + Filter ═══ -->
+        <Border Grid.Row="1" Margin="24,12,24,4" CornerRadius="6"
+                Background="White" BorderBrush="#D1D5DB" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="🔍" FontSize="16"
+                           VerticalAlignment="Center" Margin="14,0,6,0"/>
+                <TextBox x:Name="SearchBox" Grid.Column="1"
+                         BorderThickness="0" FontSize="14"
+                         Padding="6,10" Background="Transparent"
+                         FontFamily="Malgun Gothic" Foreground="#9CA3AF"
+                         Text="변환 형식 검색  (예: TTF, WOFF2, EOT ...)"
+                         GotFocus="SearchBox_GotFocus"
+                         LostFocus="SearchBox_LostFocus"
+                         TextChanged="SearchBox_TextChanged"/>
+                <TextBlock x:Name="CountLabel" Grid.Column="2"
+                           FontSize="12" Foreground="#9CA3AF"
+                           VerticalAlignment="Center" Margin="0,0,14,0"
+                           FontFamily="Malgun Gothic"/>
+            </Grid>
+        </Border>
+
+        <!-- ═══ Filter tabs ═══ -->
+        <ScrollViewer Grid.Row="2" Margin="20,8,20,4"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Disabled" Height="40">
+            <StackPanel x:Name="FilterPanel" Orientation="Horizontal" VerticalAlignment="Center"/>
+        </ScrollViewer>
+
+        <!-- ═══ Card Grid ═══ -->
+        <ScrollViewer Grid.Row="3" Margin="16,4,16,8"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl x:Name="CardsPanel">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource CardBorder}"
+                                MouseLeftButtonDown="Card_Click" Tag="{Binding}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Width="44" Height="44"
+                                        CornerRadius="6" Margin="0,0,12,0">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                            <GradientStop Color="#DB2777" Offset="0"/>
+                                            <GradientStop Color="#9D174D" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                    <TextBlock Text="🔤" FontSize="20"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                </Border>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Title}" FontSize="13"
+                                               FontWeight="Bold" Foreground="#222"
+                                               FontFamily="Malgun Gothic"/>
+                                    <TextBlock Text="{Binding Description}" FontSize="10.5"
+                                               Foreground="#9CA3AF" Margin="0,2,0,0"
+                                               FontFamily="Malgun Gothic"/>
+                                </StackPanel>
+                                <TextBlock Grid.Column="2" Text="›" FontSize="22"
+                                           FontWeight="Bold" Foreground="#DB2777"
+                                           VerticalAlignment="Center" Margin="6,0,2,0"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <!-- ═══ Status bar ═══ -->
+        <Border Grid.Row="4" Background="White" Padding="16,8"
+                BorderBrush="#E5E7EB" BorderThickness="0,1,0,0">
+            <StackPanel>
+                <ProgressBar x:Name="ConversionProgress" Height="6" Minimum="0" Maximum="100" Value="0"
+                             Visibility="Collapsed" Margin="0,0,0,6"
+                             Background="#E5E7EB" Foreground="#22C55E"
+                             Style="{StaticResource GreenProgressBar}"/>
+                <Grid>
+                    <TextBlock x:Name="StatusText" Text="변환할 형식을 선택하세요"
+                               FontSize="12" Foreground="#6B7280" FontFamily="Malgun Gothic"/>
+                    <TextBlock x:Name="TotalLabel" FontSize="12" Foreground="#9CA3AF"
+                               FontFamily="Malgun Gothic" HorizontalAlignment="Right"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

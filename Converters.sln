@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageConverter", "ImageConverter\ImageConverter.csproj", "{400E049C-8FA4-4ED0-AB72-EFF81969E087}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioConverter", "AudioConverter\AudioConverter.csproj", "{FA130A32-57BC-4203-88C3-7FB30C51F0E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VideoConverter", "VideoConverter\VideoConverter.csproj", "{11B87D9E-18FC-4D94-9F80-DE2F0A048FB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocumentConverter", "DocumentConverter\DocumentConverter.csproj", "{94A11B57-B37D-4A70-817E-714D320F615F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FontConverter", "FontConverter\FontConverter.csproj", "{675BCB4E-6E38-4BF9-A1F3-39AAED2FCCAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegratedConverter", "IntegratedConverter\IntegratedConverter.csproj", "{45A22786-299F-4324-8931-9B7889184997}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{400E049C-8FA4-4ED0-AB72-EFF81969E087}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{400E049C-8FA4-4ED0-AB72-EFF81969E087}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{400E049C-8FA4-4ED0-AB72-EFF81969E087}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{400E049C-8FA4-4ED0-AB72-EFF81969E087}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA130A32-57BC-4203-88C3-7FB30C51F0E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA130A32-57BC-4203-88C3-7FB30C51F0E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA130A32-57BC-4203-88C3-7FB30C51F0E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA130A32-57BC-4203-88C3-7FB30C51F0E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11B87D9E-18FC-4D94-9F80-DE2F0A048FB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11B87D9E-18FC-4D94-9F80-DE2F0A048FB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11B87D9E-18FC-4D94-9F80-DE2F0A048FB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11B87D9E-18FC-4D94-9F80-DE2F0A048FB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94A11B57-B37D-4A70-817E-714D320F615F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94A11B57-B37D-4A70-817E-714D320F615F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94A11B57-B37D-4A70-817E-714D320F615F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94A11B57-B37D-4A70-817E-714D320F615F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{675BCB4E-6E38-4BF9-A1F3-39AAED2FCCAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{675BCB4E-6E38-4BF9-A1F3-39AAED2FCCAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{675BCB4E-6E38-4BF9-A1F3-39AAED2FCCAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{675BCB4E-6E38-4BF9-A1F3-39AAED2FCCAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45A22786-299F-4324-8931-9B7889184997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45A22786-299F-4324-8931-9B7889184997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45A22786-299F-4324-8931-9B7889184997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45A22786-299F-4324-8931-9B7889184997}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

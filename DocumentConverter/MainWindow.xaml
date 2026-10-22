@@ -1,0 +1,10 @@
+<Window x:Class="UniversalConverter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="TechArchive Document Converter"
+        Width="1020" Height="780"
+        MinWidth="780" MinHeight="520"
+        WindowStartupLocation="CenterScreen"
+        Background="#F3F4F6">
+    <ContentControl x:Name="ContentArea"/>
+</Window>
