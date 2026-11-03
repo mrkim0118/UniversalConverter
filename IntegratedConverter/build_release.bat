@@ -3,7 +3,7 @@ setlocal
 
 set APP_NAME=IntegratedConverter
 set APP_DISPLAY=Universal Converter
-set VERSION=1.0.1
+set VERSION=1.0.2
 set PROJECT_DIR=%~dp0
 set PUBLISH_DIR=%PROJECT_DIR%publish\win-x64
 set INSTALLER_DIR=%PROJECT_DIR%installer
@@ -22,11 +22,14 @@ mkdir "%INSTALLER_DIR%"
 echo     Done.
 echo.
 
-echo [2/3] Publishing app (self-contained win-x64)...
+echo [2/3] Publishing app (framework-dependent win-x64)...
 dotnet publish "%PROJECT_DIR%%APP_NAME%.csproj" ^
   -c Release ^
   -r win-x64 ^
-  --self-contained true ^
+  --self-contained false ^
+  -p:DebugType=none ^
+  -p:DebugSymbols=false ^
+  -p:CopyDebugSymbolFilesFromPackages=false ^
   -p:ReadyToRun=true ^
   -o "%PUBLISH_DIR%"
 
@@ -36,6 +39,7 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
+for /r "%PUBLISH_DIR%" %%F in (*.pdb) do del /q "%%F"
 echo     Done.
 echo.
 

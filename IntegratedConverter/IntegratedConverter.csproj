@@ -11,9 +11,9 @@
     <Product>Universal Converter</Product>
     <Title>Universal Converter</Title>
     <Description>Integrated desktop converter for image, audio, video, document, and font formats.</Description>
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
-    <FileVersion>1.0.1.0</FileVersion>
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
     <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
     <AcceptNPOIOSMFLicense>true</AcceptNPOIOSMFLicense>
     <NoWarn>NU1901;NU1902;NU1903;NU1904</NoWarn>

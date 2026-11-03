@@ -4,7 +4,7 @@ setlocal
 set APP_NAME=VideoConverter
 set EXE_NAME=TechArchive Video Converter
 set APP_DISPLAY=TechArchive Video Converter
-set VERSION=1.0.4
+set VERSION=1.0.5
 set PROJECT_DIR=%~dp0
 set PUBLISH_DIR=%PROJECT_DIR%publish\win-x64
 set RELEASES_DIR=%PROJECT_DIR%releases
@@ -23,11 +23,14 @@ mkdir "%INSTALLER_DIR%"
 echo     Done.
 echo.
 
-echo [2/4] Publishing app (self-contained win-x64)...
+echo [2/4] Publishing app (framework-dependent win-x64)...
 dotnet publish "%PROJECT_DIR%%APP_NAME%.csproj" ^
   -c Release ^
   -r win-x64 ^
-  --self-contained true ^
+  --self-contained false ^
+  -p:DebugType=none ^
+  -p:DebugSymbols=false ^
+  -p:CopyDebugSymbolFilesFromPackages=false ^
   -p:ReadyToRun=true ^
   -o "%PUBLISH_DIR%"
 
@@ -37,6 +40,7 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
+for /r "%PUBLISH_DIR%" %%F in (*.pdb) do del /q "%%F"
 echo     Done.
 echo.
 
@@ -62,6 +66,7 @@ vpk pack ^
   --packDir "%PUBLISH_DIR%" ^
   --mainExe "%EXE_NAME%.exe" ^
   --packTitle "%APP_DISPLAY%" ^
+  --framework net8-x64-desktop ^
   --icon "%PROJECT_DIR%Assets\AppIcon.ico" ^
   --outputDir "%RELEASES_DIR%"
 

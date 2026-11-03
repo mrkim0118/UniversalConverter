@@ -21,6 +21,6 @@ public partial class MainWindow : Window
     private static string GetDisplayVersion()
     {
         var version = Assembly.GetEntryAssembly()?.GetName().Version;
-        return version is null ? "1.0.4" : $"{version.Major}.{version.Minor}.{Math.Max(version.Build, 0)}";
+        return version is null ? "1.0.5" : $"{version.Major}.{version.Minor}.{Math.Max(version.Build, 0)}";
     }
 }
