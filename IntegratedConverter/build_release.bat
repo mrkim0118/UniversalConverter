@@ -40,6 +40,10 @@ if errorlevel 1 (
   exit /b 1
 )
 for /r "%PUBLISH_DIR%" %%F in (*.pdb) do del /q "%%F"
+for /r "%PUBLISH_DIR%" %%F in (*.pdb) do if exist "%%F" (
+  echo [ERROR] Debug symbol remains in publish output: %%F
+  exit /b 1
+)
 echo     Done.
 echo.
 
