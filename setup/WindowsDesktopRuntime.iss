@@ -1,13 +1,19 @@
+; Installs the .NET Windows Desktop Runtime when missing.
+; An installer may set DotNetVersion before including this file; the standalone converters use .NET 8.
+#ifndef DotNetVersion
+  #define DotNetVersion "8"
+#endif
+
 [Code]
 var
   RuntimeDownloadPage: TDownloadWizardPage;
 
-function HasWindowsDesktopRuntime8: Boolean;
+function HasWindowsDesktopRuntime: Boolean;
 var
   FindRec: TFindRec;
 begin
   Result := False;
-  if FindFirst(ExpandConstant('{commonpf64}\dotnet\shared\Microsoft.WindowsDesktop.App\8.0.*'),
+  if FindFirst(ExpandConstant('{commonpf64}\dotnet\shared\Microsoft.WindowsDesktop.App\{#DotNetVersion}.0.*'),
     FindRec) then
   begin
     try
@@ -27,7 +33,7 @@ end;
 procedure InitializeWizard;
 begin
   RuntimeDownloadPage := CreateDownloadPage(
-    'Installing .NET 8 Desktop Runtime',
+    'Installing .NET {#DotNetVersion} Desktop Runtime',
     'Downloading the prerequisite from Microsoft...', nil);
   RuntimeDownloadPage.ShowBaseNameInsteadOfUrl := True;
 end;
@@ -35,13 +41,13 @@ end;
 function NextButtonClick(CurPageID: Integer): Boolean;
 begin
   Result := True;
-  if (CurPageID <> wpReady) or HasWindowsDesktopRuntime8 then
+  if (CurPageID <> wpReady) or HasWindowsDesktopRuntime then
     Exit;
 
   RuntimeDownloadPage.Clear;
   RuntimeDownloadPage.Add(
-    'https://aka.ms/dotnet/8.0/windowsdesktop-runtime-win-x64.exe',
-    'windowsdesktop-runtime-8-x64.exe', '');
+    'https://aka.ms/dotnet/{#DotNetVersion}.0/windowsdesktop-runtime-win-x64.exe',
+    'windowsdesktop-runtime-{#DotNetVersion}-x64.exe', '');
   RuntimeDownloadPage.Show;
   try
     try
@@ -49,7 +55,7 @@ begin
     except
       Log(GetExceptionMessage);
       if not RuntimeDownloadPage.AbortedByUser then
-        SuppressibleMsgBox('Unable to download .NET 8 Desktop Runtime: ' +
+        SuppressibleMsgBox('Unable to download .NET {#DotNetVersion} Desktop Runtime: ' +
           GetExceptionMessage, mbCriticalError, MB_OK, IDOK);
       Result := False;
     end;
@@ -63,21 +69,21 @@ var
   ExitCode: Integer;
 begin
   Result := '';
-  if HasWindowsDesktopRuntime8 then
+  if HasWindowsDesktopRuntime then
     Exit;
 
-  if not ShellExec('runas', ExpandConstant('{tmp}\windowsdesktop-runtime-8-x64.exe'),
+  if not ShellExec('runas', ExpandConstant('{tmp}\windowsdesktop-runtime-{#DotNetVersion}-x64.exe'),
     '/install /quiet /norestart', '', SW_SHOWNORMAL, ewWaitUntilTerminated, ExitCode) then
   begin
-    Result := 'Unable to start the .NET 8 Desktop Runtime installer.';
+    Result := 'Unable to start the .NET {#DotNetVersion} Desktop Runtime installer.';
     Exit;
   end;
 
   if ExitCode = 3010 then
   begin
     NeedsRestart := True;
-    Result := 'Restart Windows, then run this installer again to finish installing .NET 8 Desktop Runtime.';
+    Result := 'Restart Windows, then run this installer again to finish installing .NET {#DotNetVersion} Desktop Runtime.';
   end
-  else if (ExitCode <> 0) or not HasWindowsDesktopRuntime8 then
-    Result := Format('.NET 8 Desktop Runtime installation failed (exit code %d).', [ExitCode]);
+  else if (ExitCode <> 0) or not HasWindowsDesktopRuntime then
+    Result := Format('.NET {#DotNetVersion} Desktop Runtime installation failed (exit code %d).', [ExitCode]);
 end;

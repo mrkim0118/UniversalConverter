@@ -1,7 +1,7 @@
 @echo off
 setlocal
 
-for %%D in (ImageConverter AudioConverter VideoConverter DocumentConverter FontConverter IntegratedConverter) do (
+for %%D in (ImageConverter AudioConverter VideoConverter DocumentConverter FontConverter UniversalConverter) do (
   echo ============================================================
   echo Building %%D
   echo ============================================================

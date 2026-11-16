@@ -32,4 +32,12 @@
     <PackageReference Include="Velopack" Version="0.0.1298" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Include="../Shared/Models/ConversionOption.cs" Link="Models/ConversionOption.cs" />
+    <Compile Include="../Shared/Services/LanguageService.cs" Link="Services/LanguageService.cs" />
+    <Compile Include="../Shared/Services/FFmpegHelper.cs" Link="Services/FFmpegHelper.cs" />
+    <Compile Include="../Shared/Services/AudioConversionService.cs" Link="Services/AudioConversionService.cs" />
+    <Compile Include="../Shared/Services/UpdateDownloadProgressWindow.cs" Link="Services/UpdateDownloadProgressWindow.cs" />
+  </ItemGroup>
+
 </Project>

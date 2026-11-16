@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyName>UniversalConverter</AssemblyName>
+    <Product>Universal Converter</Product>
+    <Authors>Manggdy</Authors>
+    <Company>Manggdy</Company>
+    <Copyright>© Manggdy</Copyright>
+    <Title>Universal Converter</Title>
+    <Description>Integrated desktop converter for image, audio, video, document, and font formats.</Description>
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.2.0</AssemblyVersion>
+    <FileVersion>1.0.2.0</FileVersion>
+    <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
+    <AcceptNPOIOSMFLicense>true</AcceptNPOIOSMFLicense>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="14.17.2" />
+    <PackageReference Include="NPOI" Version="2.8.1" />
+    <PackageReference Include="PdfPig" Version="0.1.14" />
+    <PackageReference Include="PdfSharpCore" Version="1.3.67" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.74" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="ConverterTests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="../Shared/Models/ConversionOption.cs" Link="Models/ConversionOption.cs" />
+    <Compile Include="../Shared/Services/LanguageService.cs" Link="Services/LanguageService.cs" />
+    <Compile Include="../Shared/Services/FFmpegHelper.cs" Link="Services/FFmpegHelper.cs" />
+    <Compile Include="../Shared/Services/AudioConversionService.cs" Link="Services/AudioConversionService.cs" />
+    <Compile Include="../Shared/Services/VideoConversionService.cs" Link="Services/VideoConversionService.cs" />
+    <Compile Include="../Shared/Services/ImageConversionService.cs" Link="Services/ImageConversionService.cs" />
+    <Compile Include="../Shared/Services/DocumentConversionService.cs" Link="Services/DocumentConversionService.cs" />
+    <Compile Include="../Shared/Services/FontConversionService.cs" Link="Services/FontConversionService.cs" />
+  </ItemGroup>
+
+</Project>
