@@ -5,45 +5,54 @@
 <h1 align="center">UniversalConverter</h1>
 
 <p align="center">
-  이미지 · 오디오 · 비디오 · 문서 · 폰트 파일을 한 프로그램에서 변환하는 Windows 데스크톱 앱<br>
-  만든 사람: <b>Manggdy</b>
+  A Windows desktop app that converts image, audio, video, document and font files in one place<br>
+  Made by <b>Manggdy</b>
+</p>
+
+<p align="center">
+  <b>English</b> | <a href="README.ko.md">한국어</a>
 </p>
 
 ---
 
-## 주요 기능
+## Download
 
-- **변환기 다섯 개를 한곳에서**: 이미지, 오디오, 비디오, 문서, 폰트
-- **끌어다 놓기**: 홈 화면에 파일을 놓으면 형식에 맞는 변환기가 바로 열립니다.
-- **여러 파일 한 번에 변환**: 파일을 계속 추가할 수 있고, JPG와 PNG처럼 형식이 섞여 있어도 한 번에 바꿉니다.
-- **원본 형식 → 변환할 형식**을 드롭다운으로 고르고 **변환** 버튼 하나로 실행합니다.
-- **저장 위치**: 기본은 원본과 같은 폴더이며, 다른 폴더를 고를 수도 있습니다. 같은 이름의 파일은 덮어쓰지 않고 `이름 (1).jpg`처럼 저장합니다.
-- **이미지 품질 직접 입력(1~100)**, JPG → JPG 다시 저장 지원
-- **Windows 11 스타일(Fluent) 디자인**, 시스템 설정을 따르는 라이트/다크 모드
-- **한국어 / 영어** 화면 (Windows 표시 언어에 맞춰 시작)
-- **FFmpeg 자동 설치**: 오디오·비디오 변환에 필요한 FFmpeg를 앱 안에서 받아 설치합니다.
+Get `UniversalConverter_Setup_v1.1.0.exe` from the [Releases](https://github.com/mrkim0118/UniversalConverter/releases/latest) page and run it.
+If the required .NET 10 Desktop Runtime is missing, the installer downloads and installs it for you.
 
-## 지원 형식
+## Features
 
-| 변환기 | 형식 |
+- **Five converters in one app**: image, audio, video, document and font
+- **Drag and drop**: drop files on the home screen and the right converter opens
+- **Batch conversion**: keep adding files, even mixed formats such as JPG and PNG, and convert them all at once
+- Pick **From → To** formats in two dropdowns and press a single **Convert** button
+- **Output folder**: next to the source file by default, or any folder you choose. Existing files are never overwritten; new ones are saved as `name (1).jpg`
+- **Image quality as a number (1-100)**, including JPG → JPG re-saving
+- **Windows 11 (Fluent) design** with light and dark mode that follow your system setting
+- **English and Korean** UI, starting in your Windows display language
+- **One-click FFmpeg install** for audio and video conversion
+
+## Supported formats
+
+| Converter | Formats |
 |---|---|
-| 이미지 | 입력: HEIC, JPG, PDF, PSD, WEBP, PNG, GIF, TIFF, BMP, SVG, AVIF, ICO<br>출력: JPG, PNG, WEBP, GIF, TIFF, BMP, AVIF, ICO, PDF, PSD, HEIC |
-| 오디오 | MP3, FLAC, WAV, AIFF, AAC (서로 변환) |
-| 비디오 | MP4, AVI, WEBM, MKV, FLV, MPEG (서로 변환) |
-| 문서 | PDF, DOCX, HTML, TXT, RTF → TXT·HTML·PDF·DOCX 일부<br>CSV, JSON, XML, XLS 사이 변환 |
-| 폰트 | TTF, OTF, WOFF, WOFF2, EOT (서로 변환) |
+| Image | In: HEIC, JPG, PDF, PSD, WEBP, PNG, GIF, TIFF, BMP, SVG, AVIF, ICO<br>Out: JPG, PNG, WEBP, GIF, TIFF, BMP, AVIF, ICO, PDF, PSD, HEIC |
+| Audio | MP3, FLAC, WAV, AIFF, AAC (any to any) |
+| Video | MP4, AVI, WEBM, MKV, FLV, MPEG (any to any) |
+| Document | PDF, DOCX, HTML, TXT, RTF → TXT, HTML, PDF, DOCX (selected pairs)<br>CSV, JSON, XML, XLS between each other |
+| Font | TTF, OTF, WOFF, WOFF2, EOT (any to any) |
 
-한국어 엑셀에서 저장한 CSV(CP949)도 한글이 깨지지 않게 읽습니다.
+CSV files saved by Korean Excel (CP949) are read without broken characters.
 
-## 설치와 실행
+## Requirements
 
-- Windows 10 1809 이상, 64비트
-- **.NET 10 Desktop Runtime** (설치 프로그램이 없으면 자동으로 받아 설치합니다)
-- 오디오·비디오 변환을 처음 할 때 FFmpeg 설치 안내가 나옵니다. FFmpeg는 `%LocalAppData%\UniversalConverter\ffmpeg`에 저장되며, 다른 변환기와 함께 씁니다.
+- Windows 10 1809 or later, 64-bit
+- .NET 10 Desktop Runtime (installed automatically by the setup program)
+- The first audio or video conversion offers to install FFmpeg. It is stored in `%LocalAppData%\UniversalConverter\ffmpeg`.
 
-## 직접 빌드하기
+## Building from source
 
-필요한 것: .NET 10 SDK, (설치 파일을 만들 때) [Inno Setup 6](https://jrsoftware.org/isdl.php)
+You need the .NET 10 SDK and, to build the installer, [Inno Setup 6](https://jrsoftware.org/isdl.php).
 
 ```bash
 dotnet build Converters.sln
@@ -57,26 +66,26 @@ dotnet test Tests/ConverterTests
 UniversalConverter\build_release.bat
 ```
 
-`build_release.bat`는 `UniversalConverter/publish/win-x64`에 실행 파일을 만들고, Inno Setup이 있으면 `UniversalConverter/installer`에 설치 파일을 만듭니다.
+`build_release.bat` publishes the app to `UniversalConverter/publish/win-x64` and, when Inno Setup is installed, writes the installer to `UniversalConverter/installer`.
 
-## 폴더 구조
+## Project layout
 
 ```
-UniversalConverter/      통합 변환기 앱 (WPF, .NET 10)
-  Views/                 홈 화면, 공용 변환 화면(ConverterView), 설정 패널
-  Assets/                앱 아이콘
-Shared/                  모든 앱이 함께 쓰는 변환 로직과 모델
-Tests/ConverterTests/    단위 테스트 (CSV, 인코딩, PDF 줄바꿈, FFmpeg 진행률, 화면 로딩 등)
-ImageConverter/ …        변환기별 단독 앱 (.NET 8)
-setup/                   설치 프로그램 공용 스크립트 (.NET 런타임 설치)
+UniversalConverter/      The all-in-one app (WPF, .NET 10)
+  Views/                 Home screen, shared converter screen (ConverterView), settings panels
+  Assets/                App icon
+Shared/                  Conversion logic and models shared by every app
+Tests/ConverterTests/    Unit tests (CSV, encodings, PDF wrapping, FFmpeg progress, UI loading)
+ImageConverter/ …        Standalone single-purpose converters (.NET 8)
+setup/                   Shared installer script (.NET runtime install)
 ```
 
-## 사용한 라이브러리
+## Libraries
 
-- [Magick.NET](https://github.com/dlemstra/Magick.NET): 이미지 변환
-- [FFmpeg](https://ffmpeg.org/): 오디오·비디오 변환 (실행 시 [BtbN/FFmpeg-Builds](https://github.com/BtbN/FFmpeg-Builds)에서 내려받음)
-- [NPOI](https://github.com/nissl-lab/npoi), [PdfPig](https://github.com/UglyToad/PdfPig), [PdfSharpCore](https://github.com/ststeiger/PdfSharpCore), [HtmlAgilityPack](https://html-agility-pack.net/): 문서 변환
+- [Magick.NET](https://github.com/dlemstra/Magick.NET): images
+- [FFmpeg](https://ffmpeg.org/): audio and video (downloaded at runtime from [BtbN/FFmpeg-Builds](https://github.com/BtbN/FFmpeg-Builds))
+- [NPOI](https://github.com/nissl-lab/npoi), [PdfPig](https://github.com/UglyToad/PdfPig), [PdfSharpCore](https://github.com/ststeiger/PdfSharpCore), [HtmlAgilityPack](https://html-agility-pack.net/): documents
 
-## 만든 사람
+## Author
 
 **Manggdy**

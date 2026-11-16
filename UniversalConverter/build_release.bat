@@ -3,12 +3,14 @@ setlocal
 
 set APP_NAME=UniversalConverter
 set APP_DISPLAY=Universal Converter
-set VERSION=1.0.2
+set VERSION=1.1.0
 set PROJECT_DIR=%~dp0
 set PUBLISH_DIR=%PROJECT_DIR%publish\win-x64
 set INSTALLER_DIR=%PROJECT_DIR%installer
 set ISS_FILE=%PROJECT_DIR%setup\installer.iss
 set ISCC="C:\Program Files (x86)\Inno Setup 6\ISCC.exe"
+rem Per-user installs (e.g. winget) go to LocalAppData instead.
+if not exist %ISCC% set ISCC="%LOCALAPPDATA%\Programs\Inno Setup 6\ISCC.exe"
 
 echo ============================================================
 echo   %APP_DISPLAY% v%VERSION% - Release Build
