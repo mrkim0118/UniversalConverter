@@ -46,6 +46,7 @@ for /r "%PUBLISH_DIR%" %%F in (*.pdb) do if exist "%%F" (
   echo [ERROR] Debug symbol remains in publish output: %%F
   exit /b 1
 )
+powershell -NoProfile -ExecutionPolicy Bypass -File "%PROJECT_DIR%..\setup\sign.ps1" "%PUBLISH_DIR%\*.exe"
 echo     Done.
 echo.
 
@@ -68,11 +69,12 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
+powershell -NoProfile -ExecutionPolicy Bypass -File "%PROJECT_DIR%..\setup\sign.ps1" "%INSTALLER_DIR%\*.exe"
 
 echo.
 echo ============================================================
 echo   Build complete!
-echo   Installer: %INSTALLER_DIR%\UniversalConverter_Setup_v%VERSION%.exe
+echo   Installer: %INSTALLER_DIR%\%APP_NAME%_Setup_v%VERSION%.exe
 echo ============================================================
 echo.
 pause

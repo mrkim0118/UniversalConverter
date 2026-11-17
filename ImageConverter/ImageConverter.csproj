@@ -31,14 +31,12 @@
 
   <ItemGroup>
     <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="14.17.2" />
-    <PackageReference Include="Velopack" Version="0.0.1298" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="../Shared/Models/ConversionOption.cs" Link="Models/ConversionOption.cs" />
     <Compile Include="../Shared/Services/LanguageService.cs" Link="Services/LanguageService.cs" />
     <Compile Include="../Shared/Services/ImageConversionService.cs" Link="Services/ImageConversionService.cs" />
-    <Compile Include="../Shared/Services/UpdateDownloadProgressWindow.cs" Link="Services/UpdateDownloadProgressWindow.cs" />
   </ItemGroup>
 
 </Project>

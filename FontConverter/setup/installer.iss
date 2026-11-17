@@ -1,6 +1,6 @@
 #define AppName    "Font Converter"
 #define AppVersion "1.0.5"
-#define AppExeName "FontConverter.exe"
+#define AppExeName "TechArchive Font Converter.exe"
 #define SourceDir  "..\publish\win-x64"
 
 [Setup]

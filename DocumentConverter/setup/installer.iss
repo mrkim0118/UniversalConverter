@@ -1,6 +1,6 @@
 #define AppName    "Document Converter"
 #define AppVersion "1.0.5"
-#define AppExeName "DocumentConverter.exe"
+#define AppExeName "TechArchive Document Converter.exe"
 #define SourceDir  "..\publish\win-x64"
 
 [Setup]

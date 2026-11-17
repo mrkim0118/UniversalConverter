@@ -1,6 +1,6 @@
 #define AppName    "Audio Converter"
 #define AppVersion "1.0.6"
-#define AppExeName "AudioConverter.exe"
+#define AppExeName "TechArchive Audio Converter.exe"
 #define SourceDir  "..\publish\win-x64"
 
 [Setup]

@@ -1,6 +1,6 @@
 #define AppName    "Video Converter"
 #define AppVersion "1.0.5"
-#define AppExeName "VideoConverter.exe"
+#define AppExeName "TechArchive Video Converter.exe"
 #define SourceDir  "..\publish\win-x64"
 
 [Setup]

@@ -29,14 +29,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Velopack" Version="0.0.1298" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="../Shared/Models/ConversionOption.cs" Link="Models/ConversionOption.cs" />
     <Compile Include="../Shared/Services/LanguageService.cs" Link="Services/LanguageService.cs" />
     <Compile Include="../Shared/Services/FontConversionService.cs" Link="Services/FontConversionService.cs" />
-    <Compile Include="../Shared/Services/UpdateDownloadProgressWindow.cs" Link="Services/UpdateDownloadProgressWindow.cs" />
   </ItemGroup>
 
 </Project>

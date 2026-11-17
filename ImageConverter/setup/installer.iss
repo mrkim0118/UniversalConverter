@@ -1,6 +1,6 @@
 #define AppName    "Image Converter"
 #define AppVersion "1.0.5"
-#define AppExeName "ImageConverter.exe"
+#define AppExeName "TechArchive Image Converter.exe"
 #define SourceDir  "..\publish\win-x64"
 
 [Setup]
