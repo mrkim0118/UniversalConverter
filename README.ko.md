@@ -28,6 +28,7 @@
 - **Windows 11 스타일(Fluent) 디자인**: 시스템 설정을 따르는 라이트/다크 모드
 - **한국어 / 영어**: Windows 표시 언어에 맞춰 시작합니다.
 - **FFmpeg 자동 설치**: 오디오·비디오 변환에 필요한 FFmpeg를 앱 안에서 받아 설치합니다.
+- **업데이트 확인**: 실행할 때 GitHub 최신 릴리스를 확인하고, 새 버전이 있으면 내려받아 설치할지 묻습니다.
 
 ## 요구 사항
 
@@ -90,6 +91,7 @@ UniversalConverter\build_release.bat
 | `Tests/ConverterTests/` | 단위 테스트 (CSV, 인코딩, PDF 줄바꿈, FFmpeg 진행률, 화면 로딩 등) |
 | `ImageConverter/`, `AudioConverter/`, … | 변환기별 단독 앱 (.NET 8) |
 | `setup/` | 설치 프로그램 공용 스크립트 (.NET 런타임 설치) |
+| `UniversalConverter/Services/GitHubUpdater.cs` | GitHub 릴리스 업데이트 확인 |
 
 ## 사용한 라이브러리
 

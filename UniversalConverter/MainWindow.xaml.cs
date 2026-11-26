@@ -40,6 +40,42 @@ public partial class MainWindow : Window
         _homeView.NavigateRequested += ShowConverter;
         _homeView.FilesDropped += OpenFiles;
         ShowHome();
+        ContentRendered += (_, _) => CheckForUpdateOnStartup();
+    }
+
+    // Asks once per launch when GitHub has a newer release, then runs its setup and closes.
+    private async void CheckForUpdateOnStartup()
+    {
+        var release = await GitHubUpdater.FindNewerReleaseAsync();
+        if (release is null)
+        {
+            return;
+        }
+
+        var ko = LanguageService.IsKorean;
+        var title = ko ? "업데이트 확인" : "Update Available";
+        var message = ko
+            ? $"새 버전 v{release.Version}을 사용할 수 있습니다.\n현재 버전: {GitHubUpdater.CurrentVersion}\n\n지금 다운로드하고 설치할까요?"
+            : $"Version v{release.Version} is available.\nCurrent version: {GitHubUpdater.CurrentVersion}\n\nDownload and install it now?";
+        if (MessageBox.Show(this, message, title, MessageBoxButton.YesNo, MessageBoxImage.Information) != MessageBoxResult.Yes)
+        {
+            return;
+        }
+
+        var originalTitle = Title;
+        try
+        {
+            await GitHubUpdater.DownloadAndStartSetupAsync(
+                release,
+                new Progress<int>(percent => Title = ko ? $"업데이트 다운로드 중... {percent}%" : $"Downloading update... {percent}%"));
+            Close();
+        }
+        catch (Exception ex)
+        {
+            Title = originalTitle;
+            MessageBox.Show(this, ko ? $"업데이트 다운로드에 실패했습니다.\n{ex.Message}" : $"Failed to download the update.\n{ex.Message}",
+                title, MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
     }
 
     private static Color Rgb(int rgb) => Color.FromRgb((byte)(rgb >> 16), (byte)(rgb >> 8), (byte)rgb);

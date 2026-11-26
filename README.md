@@ -28,6 +28,7 @@ If the required .NET 10 Desktop Runtime is missing, the installer downloads and 
 - **Windows 11 (Fluent) design**: Light and dark mode that follow your system setting.
 - **English and Korean**: The UI starts in your Windows display language.
 - **One-click FFmpeg install**: For audio and video conversion.
+- **Update check**: On launch, checks the latest GitHub release and asks whether to download and install the new version.
 
 ## Requirements
 
@@ -90,6 +91,7 @@ UniversalConverter\build_release.bat
 | `Tests/ConverterTests/` | Unit tests (CSV, encodings, PDF wrapping, FFmpeg progress, UI loading) |
 | `ImageConverter/`, `AudioConverter/`, … | Standalone single-purpose converters (.NET 8) |
 | `setup/` | Shared installer script (.NET runtime install) |
+| `UniversalConverter/Services/GitHubUpdater.cs` | GitHub release update check |
 
 ## Libraries
 
