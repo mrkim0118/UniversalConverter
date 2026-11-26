@@ -1,5 +1,5 @@
 #define AppName    "Universal Converter"
-#define AppVersion "1.1.0"
+#define AppVersion "1.1.1"
 #define AppExeName "UniversalConverter.exe"
 #define SourceDir  "..\publish\win-x64"
 
