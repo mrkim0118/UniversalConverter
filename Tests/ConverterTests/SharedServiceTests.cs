@@ -90,6 +90,49 @@ public class SharedServiceTests
         Assert.Equal(1, DocumentConversionService.FitLength("WW", t => t.Length * 100, 10));
     }
 
+    [Theory]
+    [InlineData("JPG", true, true)]
+    [InlineData("HEIC", true, false)]
+    [InlineData("WEBP", true, false)]
+    [InlineData("PNG", false, false)]
+    [InlineData("PDF", false, true)]
+    public void Image_settings_apply_only_to_matching_output(string to, bool quality, bool fillsTransparency)
+    {
+        Assert.Equal(quality, ImageConversionService.UsesQuality(to));
+        Assert.Equal(fillsTransparency, ImageConversionService.FillsTransparency(to));
+    }
+
+    [Fact]
+    public void Dpi_applies_only_to_vector_or_page_sources()
+    {
+        Assert.True(ImageConversionService.UsesDpi("PDF"));
+        Assert.True(ImageConversionService.UsesDpi("svg"));
+        Assert.False(ImageConversionService.UsesDpi("JPG"));
+    }
+
+    [Fact]
+    public void Audio_and_video_settings_apply_only_to_matching_output()
+    {
+        Assert.True(AudioConversionService.UsesMp3Bitrate("MP3"));
+        Assert.False(AudioConversionService.UsesMp3Bitrate("FLAC"));
+        Assert.True(AudioConversionService.UsesBitDepth("AIFF"));
+        Assert.False(AudioConversionService.UsesAacBitrate("WAV"));
+        Assert.True(VideoConversionService.UsesCrf("WEBM"));
+        Assert.False(VideoConversionService.UsesPreset("WEBM"));
+        Assert.False(VideoConversionService.UsesCrf("AVI"));
+    }
+
+    // Every image output format must be accepted by the rules (MapFormat throws for unknown ones).
+    [Fact]
+    public void Image_setting_rules_cover_every_output_format()
+    {
+        foreach (var f in UniversalConverter.Models.ConversionOption.ImageOutputFormats)
+        {
+            ImageConversionService.UsesQuality(f);
+            ImageConversionService.FillsTransparency(f);
+        }
+    }
+
     [Fact]
     public void Image_options_allow_jpg_to_jpg_but_no_other_same_format()
     {

@@ -18,13 +18,13 @@ public static class ImageConversionService
         var fromExt = Path.GetExtension(inputPath).TrimStart('.').ToUpper();
 
         var readSettings = new MagickReadSettings();
-        if (fromExt is "PDF" or "EPS" or "SVG" or "SVGZ")
+        if (UsesDpi(fromExt))
             readSettings.Density = new Density(dpi, dpi);
 
         using var image = new MagickImage(inputPath, readSettings);
 
         // ── 투명 배경 처리 (JPG, BMP, PDF 등 투명 미지원 포맷) ──
-        if (format is MagickFormat.Jpeg or MagickFormat.Bmp or MagickFormat.Pdf)
+        if (FillsTransparency(toFormat))
         {
             image.BackgroundColor = bgColor == "Black" ? MagickColors.Black : MagickColors.White;
             image.Alpha(AlphaOption.Remove);
@@ -38,11 +38,25 @@ public static class ImageConversionService
         }
 
         // ── 품질 설정 (손실 포맷만 적용) ──
-        if (format is MagickFormat.Jpeg or MagickFormat.WebP or MagickFormat.Avif)
+        if (UsesQuality(toFormat))
             image.Quality = (uint)Math.Clamp(quality, 1, 100);
 
         image.Write(outputPath, format);
     }
+
+    // Which settings matter for a conversion; the UI uses the same rules to disable the rest.
+
+    /// <summary>Quality applies to lossy output formats.</summary>
+    public static bool UsesQuality(string toFormat) =>
+        MapFormat(toFormat) is MagickFormat.Jpeg or MagickFormat.WebP or MagickFormat.Avif or MagickFormat.Heic;
+
+    /// <summary>The background colour fills transparency for output formats that can't keep it.</summary>
+    public static bool FillsTransparency(string toFormat) =>
+        MapFormat(toFormat) is MagickFormat.Jpeg or MagickFormat.Bmp or MagickFormat.Pdf;
+
+    /// <summary>DPI applies when the source is vector/page based and has to be rasterised.</summary>
+    public static bool UsesDpi(string fromFormat) =>
+        fromFormat.ToUpperInvariant() is "PDF" or "EPS" or "SVG" or "SVGZ";
 
     private static MagickFormat MapFormat(string fmt) => fmt.ToUpper() switch
     {

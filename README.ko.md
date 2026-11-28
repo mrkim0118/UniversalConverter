@@ -14,7 +14,7 @@
 
 ## 다운로드
 
-[Releases](https://github.com/mrkim0118/UniversalConverter/releases/latest) 페이지에서 `UniversalConverter_Setup_v1.1.0.exe`를 받아 실행하세요.
+[Releases](https://github.com/mrkim0118/UniversalConverter/releases/latest) 페이지에서 `UniversalConverter_Setup_v1.1.2.exe`를 받아 실행하세요.
 필요한 .NET 10 Desktop Runtime이 없으면 설치 프로그램이 자동으로 받아 설치합니다.
 
 ## 주요 기능
@@ -49,6 +49,22 @@
 | 폰트 | TTF, OTF, WOFF, WOFF2, EOT (서로 변환) |
 
 한국어 엑셀에서 저장한 CSV(CP949)도 한글이 깨지지 않게 읽습니다.
+
+### 형식별 설정
+
+고른 형식에 영향이 없는 설정은 흐리게 비활성화되며, 마우스를 올리면 이유가 표시됩니다.
+
+| 변환기 | 설정 | 적용되는 경우 |
+|---|---|---|
+| 이미지 | 품질 (1~100) | JPG, WEBP, AVIF, HEIC로 저장할 때 |
+| 이미지 | 투명 배경 | JPG, BMP, PDF로 저장할 때 |
+| 이미지 | PDF·SVG 해상도 | 원본이 PDF나 SVG일 때 |
+| 오디오 | MP3 / AAC 음질 | MP3 / AAC로 저장할 때 |
+| 오디오 | WAV·AIFF 비트 심도 | WAV, AIFF로 저장할 때 |
+| 비디오 | 화질 | MP4, MKV, WEBM으로 저장할 때 |
+| 비디오 | 인코딩 속도 | MP4, MKV로 저장할 때 |
+
+샘플레이트, 오디오 음질, 해상도는 모든 형식에 적용됩니다.
 
 ## 데이터와 설정
 

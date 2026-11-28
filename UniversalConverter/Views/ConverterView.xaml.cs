@@ -48,7 +48,11 @@ public partial class ConverterView : UserControl
         FromCombo.SelectedIndex = 0;
 
         if (settings == null) SettingsBox.Visibility = Visibility.Collapsed;
-        else SettingsHost.Content = settings;
+        else
+        {
+            SettingsHost.Content = settings;
+            NotifySettings();   // the first From/To selection happened before the panel was attached
+        }
 
         if (_needsFFmpeg)
         {
@@ -108,6 +112,17 @@ public partial class ConverterView : UserControl
            .Where(t => sources.All(s => all.Any(o => o.FromFormat == s && o.ToFormat == t))).ToList();
 
     // Offer only targets that every source format in play can become; keep the previous target when still valid.
+    private void To_Changed(object sender, SelectionChangedEventArgs e) => NotifySettings();
+
+    // Lets the settings panel disable options that don't apply to the current source/target formats.
+    private void NotifySettings()
+    {
+        if (SettingsHost?.Content is not SettingsPanel { FormatsChanged: { } notify }) return;
+        if (FromCombo.SelectedItem is not ComboBoxItem { Tag: string from }
+            || ToCombo.SelectedItem is not ComboBoxItem { Tag: string to }) return;
+        notify(from == "" ? LoadedFormats() : [from], to);
+    }
+
     private void From_Changed(object? sender, SelectionChangedEventArgs? e)
     {
         if (ToCombo == null || FromCombo.SelectedItem is not ComboBoxItem { Tag: string from }) return;   // fires during InitializeComponent

@@ -14,7 +14,7 @@ Drop files on the home screen, pick the target format, and convert them all at o
 
 ## Download
 
-Get `UniversalConverter_Setup_v1.1.0.exe` from the [Releases](https://github.com/mrkim0118/UniversalConverter/releases/latest) page and run it.
+Get `UniversalConverter_Setup_v1.1.2.exe` from the [Releases](https://github.com/mrkim0118/UniversalConverter/releases/latest) page and run it.
 If the required .NET 10 Desktop Runtime is missing, the installer downloads and installs it for you.
 
 ## Features
@@ -49,6 +49,22 @@ If the required .NET 10 Desktop Runtime is missing, the installer downloads and 
 | Font | TTF, OTF, WOFF, WOFF2, EOT (any to any) |
 
 CSV files saved by Korean Excel (CP949) are read without broken characters.
+
+### Settings by format
+
+Settings that have no effect on the chosen formats are dimmed; hover over one to see why.
+
+| Converter | Setting | Applies when |
+|---|---|---|
+| Image | Quality (1-100) | Saving as JPG, WEBP, AVIF or HEIC |
+| Image | Transparent background | Saving as JPG, BMP or PDF |
+| Image | PDF/SVG resolution | The source is a PDF or SVG |
+| Audio | MP3 / AAC bitrate | Saving as MP3 / AAC |
+| Audio | WAV/AIFF bit depth | Saving as WAV or AIFF |
+| Video | Quality | Saving as MP4, MKV or WEBM |
+| Video | Encoding speed | Saving as MP4 or MKV |
+
+Sample rate, audio bitrate and resolution apply to every format.
 
 ## Data & Settings
 

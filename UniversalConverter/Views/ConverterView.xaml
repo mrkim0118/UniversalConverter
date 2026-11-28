@@ -93,7 +93,7 @@
                 <TextBlock Text="&#xE72A;" FontFamily="Segoe MDL2 Assets" FontSize="12" Margin="14,0"
                            Foreground="{DynamicResource TextFillColorSecondaryBrush}" VerticalAlignment="Center"/>
                 <TextBlock x:Name="ToLabel" Style="{StaticResource Label}"/>
-                <ComboBox x:Name="ToCombo" MinWidth="140" Height="34" FontSize="13"/>
+                <ComboBox x:Name="ToCombo" MinWidth="140" Height="34" FontSize="13" SelectionChanged="To_Changed"/>
             </StackPanel>
             <Button x:Name="ConvertBtn" Grid.Column="2" Style="{StaticResource AccentButton}"
                     Padding="28,8" FontSize="14" Click="Convert_Click"/>

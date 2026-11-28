@@ -3,7 +3,7 @@ setlocal
 
 set APP_NAME=UniversalConverter
 set APP_DISPLAY=Universal Converter
-set VERSION=1.1.1
+set VERSION=1.1.2
 set PROJECT_DIR=%~dp0
 set PUBLISH_DIR=%PROJECT_DIR%publish\win-x64
 set INSTALLER_DIR=%PROJECT_DIR%installer

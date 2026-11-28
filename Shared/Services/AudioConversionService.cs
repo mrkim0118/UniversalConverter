@@ -38,4 +38,9 @@ public static class AudioConversionService
         var totalSeconds = progress != null ? FFmpegHelper.GetDurationSeconds(inputPath) : 0;
         FFmpegHelper.Run($"-i \"{inputPath}\" -vn {srArg}{codecArgs} -y \"{outputPath}\"", totalSeconds, progress);
     }
+
+    // Which settings matter for a target format (mirrors codecArgs above); the UI disables the rest.
+    public static bool UsesMp3Bitrate(string toFormat) => toFormat.ToUpperInvariant() == "MP3";
+    public static bool UsesAacBitrate(string toFormat) => toFormat.ToUpperInvariant() == "AAC";
+    public static bool UsesBitDepth(string toFormat) => toFormat.ToUpperInvariant() is "WAV" or "AIFF";
 }

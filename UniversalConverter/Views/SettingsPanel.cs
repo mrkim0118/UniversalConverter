@@ -10,6 +10,20 @@ public class SettingsPanel : WrapPanel
     public record Item(string Ko, string En, object Value);
 
     private readonly List<Action<bool>> _relabel = [];
+    private readonly Dictionary<string, StackPanel> _groups = [];
+
+    /// <summary>Called by the converter screen with the source formats and the chosen target format.</summary>
+    public Action<IList<string>, string>? FormatsChanged { get; private set; }
+
+    /// <summary>Dims and disables a setting that has no effect on the current conversion.</summary>
+    private void SetApplies(string ko, bool applies)
+    {
+        var group = _groups[ko];
+        group.IsEnabled = applies;
+        group.Opacity = applies ? 1 : 0.45;
+    }
+
+    private bool Applies(string ko) => _groups[ko].IsEnabled;
 
     public SettingsPanel()
     {
@@ -26,14 +40,16 @@ public class SettingsPanel : WrapPanel
     private StackPanel Group(string ko, string en, string? tipKo, string? tipEn)
     {
         var label = new TextBlock { Style = (Style)FindResource("Label") };
+        var group = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 4, 24, 4) };
+        ToolTipService.SetShowOnDisabled(group, true);   // the tooltip explains why a dimmed setting is off
         Relabel(k =>
         {
             label.Text = k ? ko : en;
-            label.ToolTip = tipKo == null ? null : (k ? tipKo : tipEn);
+            group.ToolTip = tipKo == null ? null : (k ? tipKo : tipEn);
         });
-        var group = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(0, 4, 24, 4) };
         group.Children.Add(label);
         Children.Add(group);
+        _groups[ko] = group;
         return group;
     }
 
@@ -116,15 +132,22 @@ public class SettingsPanel : WrapPanel
     {
         var p = new SettingsPanel();
         var quality = p.Number("품질", "Quality", 90, 1, 100, "%",
-            "1~100. JPG · WEBP · AVIF로 저장할 때만 적용됩니다", "1-100. Applies to JPG, WEBP and AVIF only");
+            "1~100. JPG · WEBP · AVIF · HEIC로 저장할 때만 적용됩니다", "1-100. Applies only when saving as JPG, WEBP, AVIF or HEIC");
         var bg = p.Combo<string>("투명 배경", "Transparent background",
             [new("흰색", "White", "White"), new("검정", "Black", "Black")], 0,
-            "JPG·BMP처럼 투명을 지원하지 않는 형식으로 바꿀 때 채울 색", "Fill colour for formats without transparency, such as JPG or BMP");
+            "JPG · BMP · PDF로 저장할 때 투명한 부분을 채울 색", "Fills transparent areas when saving as JPG, BMP or PDF");
         var dpi = p.Combo<int>("PDF·SVG 해상도", "PDF/SVG resolution", Numbers("DPI", 72, 96, 150, 300, 600), 3,
-            "PDF·SVG·EPS를 이미지로 바꿀 때의 해상도", "Resolution used when rasterising PDF, SVG or EPS");
+            "원본이 PDF · SVG일 때 이미지로 그리는 해상도", "Resolution used when the source is a PDF or SVG");
+        p.FormatsChanged = (sources, target) =>
+        {
+            p.SetApplies("품질", ImageConversionService.UsesQuality(target));
+            p.SetApplies("투명 배경", ImageConversionService.FillsTransparency(target));
+            p.SetApplies("PDF·SVG 해상도", sources.Any(ImageConversionService.UsesDpi));
+        };
         return (p, () =>
         {
-            int q = quality(), d = dpi();
+            // An out-of-range quality only blocks the conversion when quality actually applies.
+            int q = p.Applies("품질") ? quality() : 90, d = dpi();
             var b = bg();
             return (i, o, opt, _) => ImageConversionService.Convert(i, o, opt.ToFormat, quality: q, dpi: d, bgColor: b);
         });
@@ -133,11 +156,20 @@ public class SettingsPanel : WrapPanel
     public static (FrameworkElement, Func<ConvertFile>) Audio()
     {
         var p = new SettingsPanel();
-        var mp3 = p.Combo<int>("MP3 음질", "MP3 bitrate", Numbers("kbps", 128, 192, 256, 320), 3);
-        var aac = p.Combo<int>("AAC 음질", "AAC bitrate", Numbers("kbps", 96, 128, 192, 256), 3);
-        var depth = p.Combo<int>("WAV·AIFF 비트 심도", "WAV/AIFF bit depth", Numbers("bit", 16, 24, 32), 0);
+        var mp3 = p.Combo<int>("MP3 음질", "MP3 bitrate", Numbers("kbps", 128, 192, 256, 320), 3,
+            "MP3로 저장할 때만 적용됩니다", "Applies only when saving as MP3");
+        var aac = p.Combo<int>("AAC 음질", "AAC bitrate", Numbers("kbps", 96, 128, 192, 256), 3,
+            "AAC로 저장할 때만 적용됩니다", "Applies only when saving as AAC");
+        var depth = p.Combo<int>("WAV·AIFF 비트 심도", "WAV/AIFF bit depth", Numbers("bit", 16, 24, 32), 0,
+            "WAV · AIFF로 저장할 때만 적용됩니다", "Applies only when saving as WAV or AIFF");
         var rate = p.Combo<int>("샘플레이트", "Sample rate",
             [new("원본 유지", "Original", 0), new("44100 Hz", "44100 Hz", 44100), new("48000 Hz", "48000 Hz", 48000)], 0);
+        p.FormatsChanged = (_, target) =>
+        {
+            p.SetApplies("MP3 음질", AudioConversionService.UsesMp3Bitrate(target));
+            p.SetApplies("AAC 음질", AudioConversionService.UsesAacBitrate(target));
+            p.SetApplies("WAV·AIFF 비트 심도", AudioConversionService.UsesBitDepth(target));
+        };
         return (p, () =>
         {
             int m = mp3(), a = aac(), w = depth(), s = rate();
@@ -151,13 +183,20 @@ public class SettingsPanel : WrapPanel
         var p = new SettingsPanel();
         var crf = p.Segments<int>("화질", "Quality",
             [new("낮음", "Low", 28), new("보통", "Medium", 23), new("높음", "High", 18)], 1,
-            "MP4·MKV·WEBM에 적용 (CRF 28 / 23 / 18). 높을수록 파일이 커집니다", "MP4, MKV and WEBM (CRF 28 / 23 / 18). Higher means bigger files");
+            "MP4 · MKV · WEBM으로 저장할 때만 적용 (CRF 28 / 23 / 18). 높을수록 파일이 커집니다",
+            "Applies only when saving as MP4, MKV or WEBM (CRF 28 / 23 / 18). Higher means bigger files");
         var preset = p.Combo<string>("인코딩 속도", "Encoding speed",
-            [new("빠르게", "Fast", "fast"), new("보통", "Medium", "medium"), new("느리게 (더 작은 파일)", "Slow (smaller file)", "slow")], 1);
+            [new("빠르게", "Fast", "fast"), new("보통", "Medium", "medium"), new("느리게 (더 작은 파일)", "Slow (smaller file)", "slow")], 1,
+            "MP4 · MKV로 저장할 때만 적용됩니다", "Applies only when saving as MP4 or MKV");
         var audio = p.Combo<int>("오디오 음질", "Audio bitrate", Numbers("kbps", 96, 128, 192, 256, 320), 2);
         var res = p.Combo<string>("해상도", "Resolution",
             [new("원본 유지", "Original", ""), new("360p", "360p", "360"), new("480p", "480p", "480"),
              new("720p", "720p", "720"), new("1080p", "1080p", "1080"), new("4K (2160p)", "4K (2160p)", "2160")], 0);
+        p.FormatsChanged = (_, target) =>
+        {
+            p.SetApplies("화질", VideoConversionService.UsesCrf(target));
+            p.SetApplies("인코딩 속도", VideoConversionService.UsesPreset(target));
+        };
         return (p, () =>
         {
             int c = crf(), a = audio();

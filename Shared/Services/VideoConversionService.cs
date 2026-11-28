@@ -28,4 +28,8 @@ public static class VideoConversionService
         var totalSeconds = progress != null ? FFmpegHelper.GetDurationSeconds(inputPath) : 0;
         FFmpegHelper.Run($"-i \"{inputPath}\" {codecArgs} -y \"{outputPath}\"", totalSeconds, progress);
     }
+
+    // Which settings matter for a target format (mirrors codecArgs above); the UI disables the rest.
+    public static bool UsesCrf(string toFormat) => toFormat.ToUpperInvariant() is "MP4" or "MKV" or "WEBM";
+    public static bool UsesPreset(string toFormat) => toFormat.ToUpperInvariant() is "MP4" or "MKV";
 }
